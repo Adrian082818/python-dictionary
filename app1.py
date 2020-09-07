@@ -1,12 +1,14 @@
 import json #importing libraries
 from difflib import get_close_matches
 
-data = json.load(open("data/data.json")) #loading data in python into a python datatype
+data = json.load(open("data/data.json")) #loading data in python into a python datatype, for bigger files using databases would be best.
 
 def translate(w):
     w = w.lower()
     if w in data:        
         return data[w]
+    elif w.title() in data: #if user entered "texas" this will check for "Texas as well."
+        return data[w.title()]
     elif len(get_close_matches(w, data.keys())) > 0:
         yn = input("Did you mean %s instead? Enter Y if yes, or N if no: " % get_close_matches(w, data.keys())[0])
         if yn == "Y":
